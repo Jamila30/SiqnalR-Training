@@ -13,7 +13,7 @@ await siqnalRConnection.StartAsync();
 
 
 ConnectionFactory factory = new ConnectionFactory();
-factory.Uri = new Uri("amqps://iaeugyqy:FYEIq9qgRNTCduaNi08tu2Z97u744YpD@goose.rmq2.cloudamqp.com/iaeugyqy");
+factory.Uri = new Uri("CloudAMQP url here");
 IConnection connection = factory.CreateConnection();
 using IModel channel = connection.CreateModel();
 
