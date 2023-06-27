@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jquery.min.js"></script>
+    <script src="signalr.min.js"></script>
+    <script>
+        $(document).ready(() => {
+            const connections = new signalR.HubConnectionBuilder()
+                .withUrl("https://localhost:7046/myHub").withAutomaticReconnect([1000, 2000, 3000]).build();
+
+            async function start() {
+                try {
+                    await connections.start();
+                } catch (error) {
+                    setTimeout(() => start(), 2000);
+                }
+            }
+            start();
+            const response = $("#response");
+            connections.onreconnecting(error => {
+                response.css("background-color", "blue");
+                response.css("color", "white");
+                response.html("Baglanti qurulur...");
+                response.fadeIn(3000, () => {
+                    setTimeout(() => {
+                        response.fadeOut(2000);
+                    }, 2000)
+                });
+            });
+
+            connections.onreconnected(connectionId => {
+                response.css("background-color", "green");
+                response.css("color", "white");
+                response.html("Baglanti quruldu.");
+                response.fadeIn(3000, () => {
+                    setTimeout(() => {
+                        response.fadeOut(2000);
+                    }, 2000)
+                });
+            });
+
+            connections.onclose(connectionId => {
+                response.css("background-color", "red");
+                response.css("color", "white");
+                response.html("Baglanti qurula bilmedi.");
+                response.fadeIn(3000, () => {
+                    setTimeout(() => {
+                        response.fadeOut(2000);
+                    }, 2000)
+                });
+            });
+
+            $("#btnn").click(() => {
+                let message = $("#inp").val();
+                connections.invoke("SendMessageAsync", message).catch(err => console.log(`Xeta oldu ${err}`));
+            });
+            connections.on("recieveMessage", message => {
+                $("#msg").append(message, "<br>")
+            });
+
+
+        });
+    </script>
+</head>
+
+<body>
+    <input type="text" id="inp">
+    <button id="btnn">Send </button>
+    <div id="msg"></div>
+    <div id="response" style="display:none;"></div>
+</body>
+
+</html>

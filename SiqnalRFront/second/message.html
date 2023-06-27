@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="ConnectionId"></div>
+    <input type="text" id="text_inp" placeholder="message">
+
+    <input type="text" placeholder="Write connection Ids here" id="conId">
+    
+    <button id="btn_send">Send</button>
+
+    <fieldset>
+        <legend>Choose Group to Join</legend>
+        <input type="radio" name="group" value="groupA" id="groupA">
+        <label for="groupA">A group</label>
+        <input type="radio" name="group" value="groupB" id="groupB">
+        <label for="groupB">B group</label>
+        <input type="radio" name="group" value="groupC" id="groupC">
+        <label for="groupC">C group</label>
+        <input type="radio" name="group" value="groupD" id="groupD">
+        <label for="groupD">D group</label>
+        <button id="btn_choose">Choose</button>
+    </fieldset>
+
+    <div id="messageDiv">
+
+    </div>
+
+
+    <script src="jquery.min.js"></script>
+    <script src="signalr.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
